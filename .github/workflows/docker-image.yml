@@ -30,6 +30,7 @@ jobs:
           push: true
           tags: endesapt/node-js-app:${{ github.sha }} , endesapt/node-js-app:latest
   change_version:
+    needs: docker
     runs-on: server
     steps:
       - 
