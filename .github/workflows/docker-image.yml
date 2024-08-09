@@ -10,10 +10,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - 
-        name: Set tag var
-        id: vars
-        run: echo docker_tag=$(echo $(git rev-parse --short "$GITHUB_SHA")) >> $GITHUB_OUTPUT
       -
         name: Checkout
         uses: actions/checkout@v4
@@ -32,4 +28,4 @@ jobs:
         with:
           context: "{{defaultContext}}:server"
           push: true
-          tags: endesapt/node-js-app:${{ steps.vars.outputs.docker_tag }}
+          tags: endesapt/node-js-app:$GITHUB_SHA
