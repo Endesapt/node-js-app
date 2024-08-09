@@ -32,4 +32,4 @@ jobs:
         with:
           context: "{{defaultContext}}:server"
           push: true
-          tags: endesapt/node-js-app:
+          tags: endesapt/node-js-app:${{ steps.vars.outputs.docker_tag }}
