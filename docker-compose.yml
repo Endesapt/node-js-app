@@ -6,7 +6,7 @@ networks:
 services:
 
   app:
-    image: node-js-app
+    image: endesapt/node-js-app:latest
     networks:
       - app-network
   

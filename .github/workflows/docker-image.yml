@@ -29,3 +29,10 @@ jobs:
           context: "{{defaultContext}}:server"
           push: true
           tags: endesapt/node-js-app:${{ github.sha }} , endesapt/node-js-app:latest
+  change_version:
+    runs-on: server
+    steps:
+      - 
+        name: Change Docker container tag to new tag
+        run: "sed -r -i 's/( +image: endesapt\\/node-js-app):.*/\\1:${{ github.sha }}/' ~/docker-compose.yml"
+
