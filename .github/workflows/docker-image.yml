@@ -40,7 +40,7 @@ jobs:
         name: Restart docker compose with new container
         run: |
           echo ${{ secrets.USERPWD }} | sudo -S docker compose -f ~/docker-compose.yml down
-          echo ${{ secrets.USERPWD }} | sudo -S docker compose -f ~/docker-compose.yml down
+          echo ${{ secrets.USERPWD }} | sudo -S docker compose -f ~/docker-compose.yml up
 
 
 
