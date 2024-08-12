@@ -35,6 +35,7 @@ jobs:
         -
           name: Restart docker compose with new container
           run: |
+            printenv
             echo ${{ secrets.USERPWD }} | sudo -S -E docker compose -f ~/docker-compose.yml up -d
 
 
