@@ -32,13 +32,9 @@ jobs:
     needs: docker
     runs-on: server
     steps:
-      - 
-        name: Change Docker container tag to new tag
-        run: "sed -r -i 's/( +image: endesapt\\/node-js-app):.*/\\1:${{ github.sha }}/' ~/docker-compose.yml"
-      -
         name: Restart docker compose with new container
         run: |
-          echo ${{ secrets.USERPWD }} | sudo -S docker compose -f ~/docker-compose.yml up -d
+          echo ${{ secrets.USERPWD }} | sudo -S -E docker compose -f ~/docker-compose.yml up -d
 
 
 
