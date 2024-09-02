@@ -40,9 +40,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Deploy
-        uses: WyriHaximus/github-action-helm3@v3
-        with:
-          exec: helm upgrade --install github-chart --namespace=github --set image.tag=${{ github.sha }}
-          kubeconfig: '${{ secrets.KUBECONFIG }}'
-          overrule_existing_kubeconfig: "true"
+      - 
+        name: Setup Helm
+        uses: azure/setup-helm@v4.2.0
+      - 
+        name: Update Helm Charts
+        run: |
+          helm upgrade --install github-chart --namespace=github --set image.tag=${{ github.sha }}
 
