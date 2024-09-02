@@ -42,5 +42,5 @@ jobs:
       - 
         name: Update Helm Charts
         run: |
-          helm upgrade --install github-chart --namespace=github --set image.tag=${{ github.sha }}
+          helm upgrade --install github-chart --namespace=github --set image.tag=${{ github.sha }} github-chart
 
