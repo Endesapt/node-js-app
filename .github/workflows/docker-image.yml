@@ -29,6 +29,7 @@ jobs:
           push: true
           tags: endesapt/node-js-app:${{ github.sha }} , endesapt/node-js-app:latest
   deployment:
+    needs: docker
     runs-on: 'k8s-runner'
     steps:
       - uses: actions/checkout@v3
