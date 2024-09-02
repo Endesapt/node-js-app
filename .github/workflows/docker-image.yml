@@ -28,14 +28,14 @@ jobs:
           context: "{{defaultContext}}:server"
           push: true
           tags: endesapt/node-js-app:${{ github.sha }} , endesapt/node-js-app:latest
-  change_version:
-    needs: docker
-    runs-on: server
+  deployment:
+    runs-on: 'k8s-runner'
     steps:
-        -
-          name: Restart docker compose with new container
-          run: |
-            echo ${{ secrets.USERPWD }} | sudo -S -E docker compose -f ~/docker-compose.yml up -d
-
-
+      - uses: actions/checkout@v3
+      - name: Deploy
+        uses: WyriHaximus/github-action-helm3@v3
+        with:
+          exec: helm upgrade --install github-chart --namespace=github --set image.tag=${{ github.sha }}
+          kubeconfig: '${{ secrets.KUBECONFIG }}'
+          overrule_existing_kubeconfig: "true"
 
