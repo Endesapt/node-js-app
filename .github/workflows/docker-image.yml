@@ -9,7 +9,7 @@ on:
 
 jobs:
   docker:
-    runs-on: server
+    runs-on: 'k8s-runner'
     steps:
       -
         name: Checkout
