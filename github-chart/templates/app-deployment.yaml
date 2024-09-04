@@ -17,5 +17,12 @@ spec:
       containers:
       - name: node
         image: "endesapt/node-js-app:{{.Values.image.tag}}"
+        resources:
+          requests:
+            memory: "64Mi"   # Minimum memory request
+            cpu: "100m"      # Minimum CPU request
+          limits:
+            memory: "128Mi"  # Maximum memory limit
+            cpu: "150m"      # Maximum CPU limit
         ports:
         - containerPort: 80
