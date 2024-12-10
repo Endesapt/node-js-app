@@ -1,46 +1,11 @@
-name: Docker Image CI
-
+name: hello-world
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
-
-jobs:
-  docker:
-    runs-on: 'k8s-runner'
-    # services:
-    #   docker:
-    #     image: docker:dind
-    #     options: --privileged
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v4
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push node.js server
-        uses: docker/build-push-action@v6
-        with:
-          context: "{{defaultContext}}:server"
-          push: true
-          tags: endesapt/node-js-app:${{ github.sha }} , endesapt/node-js-app:latest
-  deployment:
-    needs: docker
-    runs-on: 'k8s-runner'
-    steps:
-      - uses: actions/checkout@v3
-      - 
-        name: Setup Helm
-        uses: azure/setup-helm@v4.2.0
-      - 
-        name: Update Helm Charts
-        run: |
-          helm upgrade --install github-chart --namespace=github --set image.tag=${{ github.sha }} github-chart
-
+jobs: 
+  hello-world-job:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "$(cat hello_world.txt)"
