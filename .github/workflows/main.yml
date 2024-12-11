@@ -36,6 +36,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       environment: staging
+    if: github.event_name == 'push'
     
 
   deploy-production:
@@ -43,3 +44,4 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       environment: production
+    if: github.event_name == 'push'
