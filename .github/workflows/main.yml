@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build ${{ matrix.os }}
+        run: |
+          echo "Building on ${{ matrix.os }}"
+          sleep ${{ matrix.os == 'ubuntu-latest' && 45 || matrix.os == 'windows-latest' && 30 || 24 }}
+
+    outputs:
+      build_status: ${{ job.status }}
+
+  deploy-review:
+    needs: build
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: review
+
+  deploy-staging:
+    needs: build
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: staging
+    if: github.event_name == 'pull_request'
+
+  deploy-production:
+    needs: deploy-staging
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production

@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Deploy to ${{ inputs.environment }}
+        run: |
+          echo "Starting deployment to ${{ inputs.environment }}"
+          if [[ "${{ inputs.environment }}" == "review" ]]; then
+            sleep 15
+          elif [[ "${{ inputs.environment }}" == "staging" ]]; then
+            sleep 25
+          else
+            sleep 10
+          fi
+          echo "Finished deployment to ${{ inputs.environment }}"
