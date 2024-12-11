@@ -25,13 +25,14 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       environment: review
+    if: github.event_name == 'pull_request'
 
   deploy-staging:
     needs: build
     uses: ./.github/workflows/deploy.yml
     with:
       environment: staging
-    if: github.event_name == 'pull_request'
+    
 
   deploy-production:
     needs: deploy-staging
